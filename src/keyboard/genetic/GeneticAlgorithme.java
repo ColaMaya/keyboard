@@ -28,9 +28,12 @@ public class GeneticAlgorithme {
 	public ArrayList<Double> getCosts() {
 		return this.costs;
 	}
+
 	public ArrayList<Keyboard> getKeyboards() {
 		return this.keyboards;
 	}
+
+
 	private ArrayList<Double> costs() {
 		ArrayList<Double> costs = new ArrayList<Double>();
 		Iterator<Keyboard> iterator = this.keyboards.iterator();

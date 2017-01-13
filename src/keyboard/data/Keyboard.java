@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Keyboard {
 
-	
+
 	private final int rows = 4;
 	private final int columns = 10;
 	private int values[][];
@@ -19,15 +19,19 @@ public class Keyboard {
 		}
 	}
 
-	
+
 	public void setValue(int row, int column, int value) {
 		if(row > 3 || column > 9)
 			System.out.println("Wrong index.");
 		else	 
 			this.values[row][column] = value;	
 	}
-
 	
+	public void setValues(int[][] values) {
+		this.values = values;
+	}
+
+
 	public int getValue(int row, int column) {
 		int result = -1;
 		if(row > 3 || column > 9)
@@ -57,7 +61,7 @@ public class Keyboard {
 		return -1;
 	}
 
-	
+
 	private double distance(int value1, int value2) {
 		if(value1 == value2)
 			return 0;
@@ -98,7 +102,7 @@ public class Keyboard {
 		return result;
 	}
 
-	
+
 	public void mutate(int iterations) {
 		new Random();
 		for(int i = 0; i < iterations; i++) {
@@ -115,8 +119,33 @@ public class Keyboard {
 			this.setValue(row1, column1, value2);
 		}
 	}
-	
-	
+
+	public Keyboard mutateOnce() {
+		int[][] result = new int[rows][columns];
+		for(int row = 0; row < this.rows; row++) {
+			for(int column = 0; column < this.columns; column++) {
+				result[row][column] = this.getValue(row, column);
+			}
+		}
+		new Random();
+		int row1 = (int)(Math.random() * 4);
+		int column1 = (int)(Math.random() * 10);
+		int value1 = this.getValue(row1, column1);
+		int row2, column2, value2;
+		do {
+			row2 = (int)(Math.random() * 4);
+			column2 = (int)(Math.random() * 10);
+			value2 = this.getValue(row2, column2);
+		} while(value1 == value2);
+		result[row2][column2] =  value1;
+		result[row1][column1] = value2;
+		Keyboard keyboard = new Keyboard();
+		keyboard.setValues(result);
+		return keyboard;
+
+	}
+
+
 	public boolean isValid() {
 		ArrayList<Integer> exist = new ArrayList<Integer>();
 		for(int byLine[] : this.values) {
@@ -124,7 +153,7 @@ public class Keyboard {
 				if(value != -1) {
 					if(exist.contains(value)) 
 						return false;
-				exist.add(value);
+					exist.add(value);
 				}
 			}
 		}
@@ -133,7 +162,7 @@ public class Keyboard {
 		else
 			return true;
 	}
-	
+
 	public boolean isEqual(Keyboard keyboard) {
 		int row = 0;
 		int column = 0;
@@ -149,7 +178,7 @@ public class Keyboard {
 		return true;
 	}
 
-	
+
 	public String toString() {
 		String result = "";
 		for(int byLine[] : this.values) {
@@ -222,5 +251,5 @@ public class Keyboard {
 		}
 	}
 
-	
+
 }
